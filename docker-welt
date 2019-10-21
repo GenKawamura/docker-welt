@@ -1,0 +1,93 @@
+#!/bin/bash
+
+BASENAME=docker-welt
+CONTAINERS=containers
+
+cd $(dirname $(readlink -f $0))
+
+
+usage="$0 [option]
+
+* Available templates
+--------------------------
+# In containers
+$(ls containers)
+
+# In experiments
+$(ls experiments)
+--------------------------
+
+ -b:  [template] build 
+ -r:  [template] run
+
+ -u:  [username]
+
+
+"
+
+if [ $# -eq 0 ]; then
+    echo "$usage"
+    exit 0
+fi
+
+#--------------------------
+# Functions
+#--------------------------
+build_docker(){
+    local docker_image=$BASENAME/$template
+    local container_dir=$CONTAINERS/$template
+    [ ! -e $container_dir ] && echo "dir [$container_dir] does not exist" && exit -1
+
+    ## Building an image
+    pushd $container_dir
+    local docker_command="docker build -t $docker_image ."
+    echo "$docker_command"
+    eval $docker_command
+    popd
+}
+
+run_docker(){
+    local docker_image=$BASENAME/$template
+    local workarea="$PWD/workarea/$template"
+    [ ! -e $workarea ] && docker images | grep $docker_image && mkdir -v $workarea
+    local xwin_option="-e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix"
+    [ ! -z "$docker_user" ] && local user_option="-u $docker_user"
+    local name=$template-$RANDOM
+    
+    ## Running an image
+    local docker_command="docker run -it --rm --name $name -h $name $xwin_option $user_option --volume=$workarea:/work $docker_image"
+    echo "$docker_command"
+    eval $docker_command
+}
+
+
+#--------------------------
+# Getopt
+#--------------------------
+while getopts "eb:u:r:hv" op
+  do
+  case $op in
+      e) CONTAINERS=experiments
+	  ;;
+      b) template="$OPTARG"
+	  build_docker
+	  ;;
+      r) template="$OPTARG"
+	  run_docker
+	  ;;
+      u) docker_user=$OPTARG
+	  ;;
+      h) echo "$usage"
+	  exit 0
+	  ;;
+      v) echo "$version"
+	  exit 0
+	  ;;
+      ?) echo "$usage"
+	  exit 0
+	  ;;
+  esac
+done
+
+
+
