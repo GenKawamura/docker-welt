@@ -13,6 +13,6 @@ The docker-welt command can provides a simple wrapper of docker "build" and "run
 * To run the image, run with a name. 
      $ docker-welt -r tensorflow
      
-     ## This executes the following commands. X-window is mapped and workarea/[name]. Please put your data to workarea/[name] before the execution.
+     ## This executes the following commands. It maps X-window and uses workarea/[name]. If need, please put your data to workarea/[name] before the execution. 
      docker run -it --rm --name tensorflow-5129 -h tensorflow-5129 -e DISPLAY=:0 -v /tmp/.X11-unix:/tmp/.X11-unix  --volume=$PWD/workarea/tensorflow:/work docker-welt/tensorflow
 
