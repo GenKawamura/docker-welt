@@ -1,12 +1,15 @@
 FROM devopsil/puppet:3.7.0
 
-#RUN rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 RUN yum -y install epel-release
-RUN yum -y install http://yum.theforeman.org/releases/1.8/el6/x86_64/foreman-release.rpm
+RUN yum -y install http://yum.theforeman.org/releases/1.9/el6/x86_64/foreman-release.rpm
 RUN yum -y install https://download1.rpmfusion.org/free/el/rpmfusion-free-release-6.noarch.rpm 
-#RUN yum -y install ros-release http://li.nux.ro/download/nux/dextop/el6/x86_64/nux-dextop-release-0-2.el6.nux.noarch.rpm
 RUN yum -y install http://repository.it4i.cz/mirrors/repoforge/redhat/el6/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
 
+# Workdir
+ENV workdir /work
+RUN mkdir -p ${workdir} &&  chmod 1777 ${workdir} && ln -sv ${workdir} /var/lib/pgsql
+
+## Foreman
 RUN yum -y install foreman-installer
 
 # make hostname -f work for foreman-installer
@@ -24,3 +27,6 @@ CMD foreman-installer --foreman-admin-password=changeme \
   && tail -f /var/log/foreman/production.log
 
 EXPOSE 443
+
+
+
