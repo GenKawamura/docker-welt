@@ -18,10 +18,11 @@ $(ls experiments)
 --------------------------
 
  -e:  Use experiemnts
- -c:  Use docker-compose
+ -C:  Use docker-compose
 
  -b:  [template] build 
- -r:  [template] run
+ -r:  [template] run or up
+ -d:  [template] down
 
  -u:  [username]
 
@@ -38,54 +39,88 @@ fi
 #--------------------------
 build_docker(){
     local docker_image=$BASENAME/$template
+
     local container_dir=$CONTAINERS/$template
     [ ! -e $container_dir ] && echo "dir [$container_dir] does not exist" && exit -1
 
     ## Building an image
-    pushd $container_dir
     local docker_command="docker build -t $docker_image ."
     [ "$USE_COMPOSER" == "ON" ] && docker_command="docker-compose build"
 
     ## Run
+    cd $container_dir
     echo "$docker_command"
     eval $docker_command
-    popd
 }
+
 
 run_docker(){
     local docker_image=$BASENAME/$template
+
+    local container_dir=$CONTAINERS/$template
+    [ ! -e $container_dir ] && echo "dir [$container_dir] does not exist" && exit -1
+
+
     local workarea="$PWD/workarea/$template"
-    [ ! -e $workarea ] && docker images | grep $docker_image && mkdir -v $workarea
-    local xwin_option="-e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix"
-    local sound_option="--device /dev/snd"
-    [ -e $workarea/env.conf ] && local env_option="--env-file $workarea/env.conf"
-    [ ! -z "$docker_user" ] && local user_option="-u $docker_user"
-    local name=$template-$RANDOM
-    local docker_run_option="-h $name"
-    [ -e $workarea/docker_run.conf ] && docker_run_option=$(cat $workarea/docker_run.conf)
-    
+    [ ! -e $workarea ] && mkdir -v $workarea
+
     ## Running an image
-    local docker_command="docker run -it --rm --name $name $docker_run_option $xwin_option $sound_option $env_option $user_option --volume=$workarea:/work $docker_image"
+    case $USE_COMPOSER in
+	ON)
+	    docker_command="docker-compose up"
+	    [ ! -e $container_dir/workarea ] && ln -s $workarea $container_dir/workarea
+	    ;;
+	*)
+	    local xwin_option="-e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix"
+	    [ -e $workarea/env.conf ] && local env_option="--env-file $workarea/env.conf"
+	    [ ! -z "$docker_user" ] && local user_option="-u $docker_user"
+	    local name=$template-$RANDOM
+	    local sound_option="--device /dev/snd"
+	    local docker_run_option="-h $name"
+	    [ -e $container_dir/docker_run.conf ] && docker_run_option=$(cat $container_dir/docker_run.conf)
+	    local docker_command="docker run -it --rm --name $name $docker_run_option $xwin_option $sound_option $env_option $user_option --volume=$workarea:/work $docker_image"
+	    ;;
+    esac
+
+    ## Run
+    cd $container_dir
     echo "$docker_command"
     eval $docker_command
 }
 
+
+down_docker(){
+    local docker_image=$BASENAME/$template
+
+    local container_dir=$CONTAINERS/$template
+    [ ! -e $container_dir ] && echo "dir [$container_dir] does not exist" && exit -1
+
+    docker_command="docker-compose down"
+
+    ## Run
+    cd $container_dir
+    echo "$docker_command"
+    eval $docker_command
+}
 
 #--------------------------
 # Getopt
 #--------------------------
-while getopts "eb:u:r:hv" op
+while getopts "eCb:u:r:d:hv" op
   do
   case $op in
       e) CONTAINERS=experiments
 	  ;;
-      c) USE_COMPOSER=ON
+      C) USE_COMPOSER=ON
 	  ;;
       b) template="$OPTARG"
 	  build_docker
 	  ;;
       r) template="$OPTARG"
 	  run_docker
+	  ;;
+      d) template="$OPTARG"
+	  down_docker
 	  ;;
       u) docker_user=$OPTARG
 	  ;;

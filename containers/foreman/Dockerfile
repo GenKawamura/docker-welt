@@ -29,4 +29,6 @@ CMD foreman-installer --foreman-admin-password=changeme \
 EXPOSE 443
 
 
-
+## For Gitweb
+RUN ln -sv ${workdir} /var/www/gitweb
+RUN yum -y install gitweb

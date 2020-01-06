@@ -1,0 +1,66 @@
+version: "2.0"
+services:
+
+  # ELK framework
+  elasticsearch:
+    build: elasticsearch/
+    image: docker-welt/elasticsearch
+    volumes:
+      - "$PWD/workarea/elasticsearch_index_data:/usr/share/elasticsearch/data"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx7g -Xms7g"
+    networks:
+      - elk
+
+  logstash_dcache:
+    build: logstash
+    image: docker-welt/logstash
+    volumes:
+      - "$PWD/workarea/dcache_billing:/dcache_billing"
+      - "$PWD/logstash_dcache/pipeline:/usr/share/logstash/pipeline"
+      - "$PWD/logstash_dcache/patterns:/usr/share/logstash/patterns"
+    ports:
+      - "5000:5000"
+    environment:
+      LS_JAVA_OPTS: "-Xmx1g -Xms1g"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+  logstash_htcondor:
+    build: logstash/
+    image: docker-welt/logstash
+    volumes:
+      - "$PWD/workarea/htcondor_eventlog:/htcondor_eventlog"
+      - "$PWD/logstash_htcondor/pipeline:/usr/share/logstash/pipeline"
+      - "$PWD/logstash_htcondor/patterns:/usr/share/logstash/patterns"
+    ports:
+      - "5100:5000"
+    environment:
+      LS_JAVA_OPTS: "-Xmx1g -Xms1g"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    build: kibana/
+    image: docker-welt/kibana
+    ports:
+      - "20261:5601"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+    volumes:
+      - "$PWD/kibana:/usr/share/kibana/config"
+
+
+networks:
+  elk:
+    driver: bridge
