@@ -4,7 +4,7 @@ BASENAME=docker-welt
 CONTAINERS=containers
 
 cd $(dirname $(readlink -f $0))
-
+[ ! -e experiments ] && mkdir -v experiments
 
 usage="$0 [option]
 

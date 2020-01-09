@@ -29,11 +29,11 @@ RUN rpm --import http://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor &
     mkdir /home/${SUBMIT_USER}/example && \
     sed -i 's/\(^Defaults.*requiretty.*\)/#\1/' /etc/sudoers && \
     rm -f /etc/localtime && \
-    ln -s /usr/share/zoneinfo/America/Chicago /etc/localtime
+    ln -s /usr/share/zoneinfo/CET /etc/localtime
 
 # KNOBS and startup script
 COPY start-condor.sh /usr/sbin/
-COPY condor_config.docker_image /etc/condor/config.d/
+COPY condor_negotiator/* /etc/condor/config.d/
 
 # Signal to User of this image use this directory (run with -v)
 VOLUME ["/home/${SUBMIT_USER}/submit"]

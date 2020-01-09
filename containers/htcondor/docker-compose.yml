@@ -1,0 +1,25 @@
+version: "2.0"
+services:
+
+  # framework
+  htcondor_master:
+    build: master
+    image: docker-welt/htcondor_master
+    volumes:
+      - "$PWD/workarea:/workarea"
+    networks:
+      - htcondor_nw
+
+  htcondor_worker:
+    build: worker
+    image: docker-welt/htcondor_worker
+    volumes:
+      - "$PWD/workarea:/workarea"
+    networks:
+      - htcondor_nw
+    depends_on:
+      - htcondor_master
+
+networks:
+  htcondor_nw:
+    driver: bridge
