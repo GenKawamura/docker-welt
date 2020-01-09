@@ -26,3 +26,13 @@ The docker-welt command can provides a simple wrapper of docker "build" and "run
 
   * https://www.youtube.com/watch?v=eHjpZr3GB6s&feature=emb_logo
 
+
+ 2. HTCondor
+  
+  * Building HTCondor (-C = use docker-compose, -b = build)
+
+  $ docker-welt -C -b htcondor
+  
+  * Running HTCondor master and worker nodes (-C = use docker-compose, -r = run)
+
+  $ docker-welt -C -r htcondor
