@@ -33,7 +33,7 @@ RUN rpm --import http://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor &
 
 # KNOBS and startup script
 COPY start-condor.sh /usr/sbin/
-COPY condor_batch/* /etc/condor/config.d/
+#COPY condor_batch/* /etc/condor/config.d/
 
 # Use this if you're not going to restart HTCondor in the container.
 # If you do need to do that, you're better off running the condor_master

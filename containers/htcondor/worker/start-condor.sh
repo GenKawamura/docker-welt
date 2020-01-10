@@ -1,4 +1,4 @@
 #!/bin/bash
 
-$(condor_config_val MASTER) -f -t 2>&1 | tee /var/log/condor/MasterLog 
-
+mkdir /var/spool/condor
+$(condor_config_val Master) -f -t 2>&1 | tee /var/log/condor/MasterLog

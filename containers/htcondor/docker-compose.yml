@@ -7,14 +7,27 @@ services:
     image: docker-welt/htcondor_master
     volumes:
       - "$PWD/workarea:/workarea"
+      - "$PWD/master/master_config.d:/etc/condor/config.d"
     networks:
       - htcondor_nw
+
+  htcondor_submitter:
+    build: submitter
+    image: docker-welt/htcondor_submitter
+    volumes:
+      - "$PWD/workarea:/workarea"
+      - "$PWD/submitter/submitter_config.d:/etc/condor/config.d"
+    networks:
+      - htcondor_nw
+    depends_on:
+      - htcondor_master
 
   htcondor_worker:
     build: worker
     image: docker-welt/htcondor_worker
     volumes:
       - "$PWD/workarea:/workarea"
+      - "$PWD/worker/worker_config.d:/etc/condor/config.d"
     networks:
       - htcondor_nw
     depends_on:
