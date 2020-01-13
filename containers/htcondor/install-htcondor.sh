@@ -17,6 +17,9 @@ install_commons(){
     cp -v repos/htcondor-stable-rh${os_release}.repo /etc/yum.repos.d && \
     yum clean all && \
     yum -y install condor-procd condor-external-libs condor-bosco condor-classads condor-python condor
+
+    mkdir -v /var/spool/condor
+    service condor restart
 }
 
 install_htcondor(){
