@@ -12,7 +12,7 @@ echo "Type = $node, HTCondor Master = $htcondor_master"
 
 ## Functions
 install_commons(){
-    RUN rpm --import http://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor && \
+    rpm --import http://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor && \
     yum-config-manager --add-repo https://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhel7.repo && \
     yum -y install condor-procd condor-external-libs condor-bosco condor-classads condor-python condor && \
     yum clean all
