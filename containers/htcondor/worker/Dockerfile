@@ -4,6 +4,7 @@ MAINTAINER Andy Pohl <apohl@morgridge.org>
 
 # HTCondor User details:
 ENV SUBMIT_USER submitter
+ENV SUBMIT_GROUP ops
 ENV GID 1000
 ENV UID 1000
 ENV PASS 123456
@@ -22,7 +23,7 @@ RUN rpm --import http://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor &
     yum -y install condor-procd condor-external-libs condor-bosco condor-classads condor-python condor && \
     yum clean all && \
     rm -f RPM-GPG-KEY-HTCondor && \
-    groupadd -g ${GID} ${SUBMIT_USER} && \
+    groupadd -g ${GID} ${SUBMIT_GROUP} && \
     useradd -m -u ${UID} -g ${GID} ${SUBMIT_USER} && \
     usermod -a -G condor ${SUBMIT_USER} && \
     echo ${PASS} | passwd --stdin ${SUBMIT_USER} && \
