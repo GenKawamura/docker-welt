@@ -27,7 +27,7 @@ install_htcondor(){
 
 ## Main
 case $node in
-    master|workeer|submitter)
+    master|worker|submitter)
 	install_htcondor
 	;;
     *)
