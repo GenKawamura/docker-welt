@@ -8,6 +8,7 @@ services:
     volumes:
       - "$PWD/workarea:/workarea"
       - "$PWD/master/master_config.d:/etc/condor/config.d"
+    hostname: htcondor_master
     networks:
       - htcondor_nw
 
@@ -17,6 +18,7 @@ services:
     volumes:
       - "$PWD/workarea:/workarea"
       - "$PWD/submitter/submitter_config.d:/etc/condor/config.d"
+    hostname: htcondor_submitter
     networks:
       - htcondor_nw
     depends_on:
@@ -28,6 +30,7 @@ services:
     volumes:
       - "$PWD/workarea:/workarea"
       - "$PWD/worker/worker_config.d:/etc/condor/config.d"
+    hostname: htcondor_worker
     networks:
       - htcondor_nw
     depends_on:

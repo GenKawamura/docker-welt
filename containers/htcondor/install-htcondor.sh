@@ -2,13 +2,14 @@
 
 cd $(dirname $0)
 
-usage="$0 [master/worker/submitter] [name of condor master (collector)]"
+usage="$0 [master/worker/submitter] [name of condor master (collector)] [UID]"
 
 [ $# -eq 0 ] && echo "$usage" && exit 0
 
 node=$1
 htcondor_master=$2
-echo "Type = $node, HTCondor Master = $htcondor_master"
+UID=$3
+echo "Type = $node, HTCondor Master = $htcondor_master, UID = $UID"
 
 ## Functions
 install_commons(){
@@ -27,6 +28,7 @@ install_htcondor(){
     install_commons
     cp -rv $node/${node}_config.d/*.conf /etc/condor/config.d/
     sed -e "s/htcondor_master/$htcondor_master/g" -i /etc/condor/config.d/*.conf
+    sed -e "s/docker-welt/$UID/g" -i /etc/condor/config.d/*.conf
 }
 
 ## Main

@@ -67,7 +67,7 @@ run_docker(){
     ## Running an image
     case $USE_COMPOSER in
 	ON)
-	    docker_command="docker-compose up"
+	    docker_command="docker-compose up --force-recreate"
 	    [ ! -e $container_dir/workarea ] && ln -s $workarea $container_dir/workarea
 	    ;;
 	*)
