@@ -9,6 +9,6 @@ LRMS ([A-Fa-z]*)
 QUEUE ([A-Fa-z0-9]*)
 OTHERS (.*)
 
-ARCCE_GMJOBS_TEST %{ARCCE_GMJOBS_TIMESTAMP:timestamp} %{EVENT:event} - job id: %{JOB_ID:job_id}, unix user: %{UNIX_USER:unix_user}:%{UNIX_GROUP:unix_group}, %{OTHERS:others}
-ARCCE_GMJOBS_TEST2 %{ARCCE_GMJOBS_TIMESTAMP:timestamp} %{EVENT:event} - job id: %{JOB_ID:job_id}, unix user: %{UNIX_USER:unix_user}:%{UNIX_GROUP:unix_group}, name: %{JOB_NAME:job_name}, %{OTHERS:others} 
+ARCCE_GMJOBS_TEST %{ARCCE_GMJOBS_TIMESTAMP:arc_timestamp} %{EVENT:event} - job id: %{JOB_ID:job_id}, unix user: %{UNIX_USER:unix_user}:%{UNIX_GROUP:unix_group}, %{OTHERS:others}
+ARCCE_GMJOBS_TEST2 %{ARCCE_GMJOBS_TIMESTAMP:arc_timestamp} %{EVENT:event} - job id: %{JOB_ID:job_id}, unix user: %{UNIX_USER:unix_user}:%{UNIX_GROUP:unix_group}, name: %{JOB_NAME:job_name}, %{OTHERS:others} 
 ARCCE_GMJOBS %{ARCCE_GMJOBS_TIMESTAMP:arc_timestamp} %{EVENT:event} - job id: %{JOB_ID:job_id}, unix user: %{UNIX_USER:unix_user}:%{UNIX_GROUP:unix_group}, name: %{JOB_NAME:job_name}, owner: %{SUBJECT:subject}, lrms: %{LRMS:lrms}, queue: %{QUEUE:queue},
