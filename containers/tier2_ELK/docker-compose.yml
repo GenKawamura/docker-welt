@@ -1,4 +1,4 @@
-version: "2.0"
+B1;5202;0cversion: "2.0"
 services:
 
   # ELK framework
@@ -40,6 +40,22 @@ services:
       - "$PWD/logstash_htcondor/patterns:/usr/share/logstash/patterns"
     ports:
       - "5100:5000"
+    environment:
+      LS_JAVA_OPTS: "-Xmx1g -Xms1g"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+  logstash_arcce:
+    build: logstash/
+    image: docker-welt/logstash
+    volumes:
+      - "$PWD/workarea/arcce_log:/arcce_log"
+      - "$PWD/logstash_arcce/pipeline:/usr/share/logstash/pipeline"
+      - "$PWD/logstash_arcce/patterns:/usr/share/logstash/patterns"
+    ports:
+      - "5200:5000"
     environment:
       LS_JAVA_OPTS: "-Xmx1g -Xms1g"
     networks:

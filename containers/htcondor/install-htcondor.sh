@@ -19,8 +19,6 @@ install_commons(){
     yum clean all && \
     yum -y install condor-procd condor-external-libs condor-bosco condor-classads condor-python condor
 
-    mkdir -v /var/spool/condor
-    service condor restart
 }
 
 install_htcondor(){
@@ -29,6 +27,10 @@ install_htcondor(){
     cp -rv $node/${node}_config.d/*.conf /etc/condor/config.d/
     sed -e "s/htcondor_master/$htcondor_master/g" -i /etc/condor/config.d/*.conf
     sed -e "s/docker-welt/$HTCONDOR_UID/g" -i /etc/condor/config.d/*.conf
+
+    ## Start
+    mkdir -v /var/spool/condor
+    service condor restart
 }
 
 ## Main
