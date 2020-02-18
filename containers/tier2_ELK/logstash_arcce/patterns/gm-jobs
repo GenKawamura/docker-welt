@@ -3,7 +3,7 @@ EVENT ([A-Fa-z]*)
 JOB_ID ([0-9a-zA-Z]*)
 UNIX_USER ([0-9]*)
 UNIX_GROUP ([0-9]*)
-JOB_NAME \"(.*)\"
+JOB_NAME (.*?)
 SUBJECT \"(.*)\"
 LRMS ([A-Fa-z]*)
 QUEUE ([A-Fa-z0-9]*)
