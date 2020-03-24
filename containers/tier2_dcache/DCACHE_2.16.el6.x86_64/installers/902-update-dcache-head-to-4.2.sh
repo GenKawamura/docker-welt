@@ -1,11 +1,7 @@
 [ "$DCACHE_UPGRADE" == "" ] && exit 0
 
 
-read_siteinfo_def +x
-
-## HEAD or POOL
-[ "$DCACHE_ADMIN" != "$(hostname -f)" ] && exit 0
-
+[ "$DCACHE_MODE" == "pool" ] && exit 0
 
 ## Removing old package
 yum -y remove dcache

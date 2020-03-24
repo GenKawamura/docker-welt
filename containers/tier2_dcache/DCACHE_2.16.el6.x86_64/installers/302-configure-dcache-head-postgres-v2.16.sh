@@ -6,10 +6,7 @@
 # @date   05.04.2014
 #----------------------------------------------------------------------------------
 
-read_siteinfo_def +x
-
-## HEAD or POOL
-[ "$DCACHE_ADMIN" != "$(hostname -f)" ] && exit 0
+[ "$DCACHE_MODE" == "pool" ] && exit 0
 
 POSTGRES_VER=9.4
 

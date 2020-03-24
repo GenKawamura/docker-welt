@@ -1,8 +1,4 @@
-read_siteinfo_def +x
-
-## HEAD or POOL
-[ "$DCACHE_ADMIN" != "$(hostname -f)" ] && exit 0
-
+[ "$DCACHE_MODE" == "pool" ] && exit 0
 
 ## Configure
 rpm -q nfs-utils-lib || yum -y --nogpgcheck install nfs-utils-lib

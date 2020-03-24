@@ -6,11 +6,7 @@
 # @date   05.04.2014
 #----------------------------------------------------------------------------------
 
-read_siteinfo_def +x
-
-## HEAD or POOL
-[ "$DCACHE_ADMIN" != "$(hostname -f)" ] && exit 0
-
+[ "$DCACHE_MODE" == "pool" ] && exit 0
 
 #-----------------------------------
 # configuratoin of dCache user
@@ -29,9 +25,7 @@ cp -v dcache_template/dcache.conf.template /etc/dcache/dcache.conf
 
 
 ## configure layout file
-cp -v dcache_template/head_layout.conf /etc/dcache/layouts/$(hostname -s).conf
-ln -s /etc/dcache/layouts/$(hostname -s).conf /etc/dcache/layouts/localhost.conf
-
+cp -v dcache_template/head_layout.conf /etc/dcache/layouts/head_layout.conf
 
 ## configuration for info provider
 grep Info-Provider /etc/dcache/dcache.conf || echo "

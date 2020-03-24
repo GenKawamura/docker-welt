@@ -6,7 +6,7 @@ services:
     build:
      context: dcache/
      args:
-       - DCACHE_HEAD=dcache
+       - DCACHE_MODE=head
     image: docker-welt/dcache
     volumes:
       - "$PWD/workarea/dcache_billing:/var/lib/dcache/billing"
@@ -19,7 +19,9 @@ services:
   dcache_pool1:
     build:
       context: dcache/
-    image: docker-welt/dcache_pool
+      args:
+       - DCACHE_MODE=pool
+    image: docker-welt/dcache-pool
     networks:
       - dcache_net
     depends_on:

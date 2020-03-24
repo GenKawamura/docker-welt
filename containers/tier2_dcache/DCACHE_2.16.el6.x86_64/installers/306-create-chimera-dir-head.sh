@@ -1,7 +1,4 @@
-read_siteinfo_def +x
-
-## HEAD or POOL
-[ "$DCACHE_ADMIN" != "$(hostname -f)" ] && exit 0
+[ "$DCACHE_MODE" == "pool" ] && exit 0
 
 # chedk dcache_pnfs_vo_dir
 [ -z "$DCACHE_PNFS_VO_DIR" ] && exit 0

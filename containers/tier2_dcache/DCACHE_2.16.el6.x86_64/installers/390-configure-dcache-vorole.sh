@@ -12,7 +12,7 @@ cp -v dcache_template/dcacheVoms2Gplasma.conf.template /etc/dcache/dcacheVoms2Gp
 /usr/sbin/edg-mkgridmap --output=/etc/grid-security/grid-mapfile --safe
 
 ## create authzdb and vorolemap
-/usr/sbin/dcacheVoms2Gplasma.py -r -a -c /etc/dcache/dcacheVoms2Gplasma.conf -q
+/usr/sbin/dcacheVoms2Gplasma.py -r -a -c /etc/dcache/dcacheVoms2Gplasma.conf 
 
 
 #---------------------------------

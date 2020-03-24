@@ -3,12 +3,6 @@
 # 
 #---------------------------------------------------------------
 
-read_siteinfo_def +x
-
-## HEAD or POOL
-DCACHE_MODE=POOL
-[ "$DCACHE_ADMIN" == "$(hostname -f)" ] && DCACHE_MODE=HEAD
-
 
 #-----------------------------------
 # configuratoin of postgres server
@@ -22,11 +16,11 @@ wget -q $RPM -O /root/$(basename $RPM)
 
 ## Install dcache
 case "$DCACHE_MODE" in
-    POOL)
+    pool)
         ## install dcache package
 	yum --nogpgcheck -y install /root/$(basename $RPM)
         ;;
-    HEAD)
+    head)
         ## install postgres
 	yum -y --nogpgcheck install postgresql94-server postgresql94
 
