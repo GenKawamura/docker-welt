@@ -1,0 +1,30 @@
+version: "3.3"
+services:
+
+  # dCache head
+  dcache:
+    build:
+     context: dcache/
+     args:
+       - DCACHE_HEAD=dcache
+    image: docker-welt/dcache
+    volumes:
+      - "$PWD/workarea/dcache_billing:/var/lib/dcache/billing"
+    ports:
+      - "2288:2288"
+    networks:
+      - dcache_net
+
+  # dCache pool
+  dcache_pool1:
+    build:
+      context: dcache/
+    image: docker-welt/dcache_pool
+    networks:
+      - dcache_net
+    depends_on:
+      - dcache
+
+networks:
+  dcache_net:
+    driver: bridge

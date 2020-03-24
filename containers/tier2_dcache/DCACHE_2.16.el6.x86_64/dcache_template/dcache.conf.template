@@ -1,0 +1,61 @@
+# This is the main configuration file of dCache.
+#
+
+## Basic
+dcache.layout=${host.name}
+dcache.namespace=chimera
+dcache.user=root
+chimera.db.user=postgres
+chimera.db.url=jdbc:postgresql://localhost/chimera?prepareThreshold=3
+
+dcache.broker.host=${host.name}
+dcache.broker.scheme=cells
+
+billing.enable.db=false
+
+## Java
+dcache.java.memory.heap=2048m
+dcache.java.memory.direct=2048m
+
+## Chimera tuning
+pnfsmanager.limits.threads-per-group=12
+
+## Pnfs
+pnfsmanager.default-retention-policy=REPLICA
+pnfsmanager.default-access-latency=ONLINE
+
+## Queues
+dcap.mover.queue=queue-dcap
+ftp.mover.queue=queue-gridftp
+xrootd.mover.queue=queue-xroot
+
+## gPlazma
+#useGPlazmaAuthorizationModule=true
+#useGPlazmaAuthorizationCell=false
+
+## Admin door
+admin.paths.authorized-keys=/root/.ssh/id_dsa.pub
+
+## SRM
+dcache.enable.space-reservation=true
+spacemanager.enable.unreserved-uploads-to-linkgroups=true
+spacemanager.authz.link-group-file-name=/etc/dcache/LinkGroupAuthorization.conf
+
+## GridFtp
+ftp.authn.protocol=gsi
+ftp.root=/
+ftp.limits.clients=1000
+
+## dCap
+dcap.authn.protocol=plain
+dcap.authz.anonymous-operations=READONLY
+
+## Webdav 
+webdav.authz.anonymous-operations=NONE
+webdav.root=/
+webdav.authn.protocol=https-jglobus
+
+## NFS configuration
+nfs.domain=portable-grid.de
+nfs.version=4.1
+

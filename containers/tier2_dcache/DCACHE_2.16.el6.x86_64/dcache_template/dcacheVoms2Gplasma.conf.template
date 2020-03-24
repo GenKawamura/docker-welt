@@ -1,0 +1,39 @@
+# grid-vorolemap path
+vorolemap /etc/grid-security/grid-vorolemap
+
+# authzdb path
+authzdb /etc/grid-security/storage-authzdb
+
+
+# Mapping ops members to ops001 uid=45001 gid=45000
+group https://voms2.cern.ch:8443/voms/ops/services/VOMSCompatibility?method=getGridmapUsers&container=/ops ops001 45001 45000
+
+# Mapping ops/Role=lcgadmin members to sgmops01 uid=60701 gid=46001
+group https://voms2.cern.ch:8443/voms/ops/services/VOMSCompatibility?method=getGridmapUsers&container=/ops/Role=lcgadmin sgmops01 60701 46001
+
+# Mapping dteam members to dteam001 uid=18118 gid=2688
+group https://voms.hellasgrid.gr:8443/voms/dteam/services/VOMSCompatibility?method=getGridmapUsers&container=/dteam dteam001 18118 2688
+
+# Mapping dteam/Role=production members to prddtm01 uid=50501 gid=2689
+group https://voms.hellasgrid.gr:8443/voms/dteam/services/VOMSCompatibility?method=getGridmapUsers&container=/dteam/Role=production prddtm01 50501 2689
+
+# Mapping dteam/Role=lcgadmin members to sgmdtm01 uid=60501 gid=2690
+group https://voms.hellasgrid.gr:8443/voms/dteam/services/VOMSCompatibility?method=getGridmapUsers&container=/dteam/Role=lcgadmin sgmdtm01 60501 2690
+
+# Mapping atlas members to atlas001 uid=10761 gid=1307
+group https://voms2.cern.ch:8443/voms/atlas/services/VOMSCompatibility?method=getGridmapUsers&container=/atlas atlas001 10761 1307
+
+# Mapping atlas/Role=lcg1 members to atlas001 uid=10761 gid=1307
+group https://voms2.cern.ch:8443/voms/atlas/services/VOMSCompatibility?method=getGridmapUsers&container=/atlas/lcg1 atlas001 10761 1307
+
+# Mapping atlas members to atlasde01 uid=40601 gid=40600
+group https://voms2.cern.ch:8443/voms/atlas/services/VOMSCompatibility?method=getGridmapUsers&container=/atlas/de atlasde01 40601 40600
+
+# Mapping atlas/Role=production members to prdatl01 uid=50201 gid=1308
+group https://voms2.cern.ch:8443/voms/atlas/services/VOMSCompatibility?method=getGridmapUsers&container=/atlas/Role=production prdatl01 50201 1308
+
+# Mapping atlas/Role=lcgadmin members to sgmatl01 uid=60201 gid=1309
+group https://voms2.cern.ch:8443/voms/atlas/services/VOMSCompatibility?method=getGridmapUsers&container=/atlas/Role=lcgadmin sgmatl01 60201 1309
+
+# Mapping atlas/Role=pilot members to atlas001 uid=10761 gid=1307
+group https://voms2.cern.ch:8443/voms/atlas/services/VOMSCompatibility?method=getGridmapUsers&container=/atlas/Role=pilot atlas001 10761 1307
