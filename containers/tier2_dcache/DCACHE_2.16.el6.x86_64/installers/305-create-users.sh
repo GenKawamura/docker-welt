@@ -1,5 +1,6 @@
 [ "$DCACHE_MODE" == "pool" ] && exit 0
 
+
 ## install yaim
 yum --nogpgcheck -y install glite-yaim-core
 

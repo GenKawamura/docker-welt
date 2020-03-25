@@ -63,7 +63,7 @@
 YAIM_LOGGING_LEVEL=DEBUG
 
 # This is the dir where the config files for gLite are located
-GLITE_DIR=/root/glite
+GLITE_DIR=/root/yaim
 MY_DOMAIN=docker-welt.de
 
 
