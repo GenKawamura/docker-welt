@@ -97,3 +97,9 @@ SITE_LOC="Goettingen, Germany"
 # The contact e-mail of your site.
 # A coma separated list of email addresses. 
 SITE_EMAIL="Gen.Kawamura@cern.ch"
+
+
+# VO
+VOS="atlas dteam ops"
+ATLAS_GROUP_ENABLE="atlas"
+OPS_GROUP_ENABLE="atlas"

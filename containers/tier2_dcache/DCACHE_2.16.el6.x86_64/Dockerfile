@@ -11,7 +11,7 @@ RUN mkdir -p ${workdir} &&  chmod 1777 ${workdir}
 ## Installing dCache
 RUN echo "DCACHE_MODE = $DCACHE_MODE"
 
-RUN yum install -y wget openssl
+RUN yum install -y wget openssh
 ADD dcache_template /root/dcache_template
 ADD postgresql-9.4 /root/postgresql-9.4
 ADD yaim /root/yaim

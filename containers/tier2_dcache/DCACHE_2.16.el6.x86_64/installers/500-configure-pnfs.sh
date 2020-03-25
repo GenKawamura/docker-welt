@@ -8,4 +8,4 @@ grep "^/pnfs " /etc/exports || echo "/pnfs 127.0.0.1(rw,root_squash)" >> /etc/ex
 [ $? -eq 0 ] && exportfs -ar 
 
 chkconfig rpcidmapd on
-service rpcidmapd restart
+#service rpcidmapd restart

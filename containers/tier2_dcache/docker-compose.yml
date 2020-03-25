@@ -8,8 +8,8 @@ services:
      args:
        - DCACHE_MODE=head
     image: docker-welt/dcache
-    volumes:
-      - "$PWD/workarea/dcache_billing:/var/lib/dcache/billing"
+#    volumes:
+#      - "$PWD/workarea/dcache_billing:/var/lib/dcache/billing"
     ports:
       - "2288:2288"
     networks:
