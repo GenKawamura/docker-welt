@@ -3,6 +3,8 @@
 ## install yaim
 yum --nogpgcheck -y install glite-yaim-core
 
+## Reading glite yaim configuration
+source yaim/site-info.def
 
 ## set yaim config_users
 export alias mv='mv -f'

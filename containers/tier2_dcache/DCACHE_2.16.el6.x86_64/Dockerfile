@@ -15,6 +15,7 @@ RUN yum install -y wget
 ADD installers /root/installers
 ADD dcache_template /root/dcache_template
 ADD postgresql-9.4 /root/postgresql-9.4
+ADD yaim /root/yaim
 ADD sbin /usr/sbin
 
 RUN cd /root && for f in $(ls installers/*.sh); do echo "$f"; bash -x $f; done
