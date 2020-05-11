@@ -63,6 +63,22 @@ services:
     depends_on:
       - elasticsearch
 
+  logstash_pbs:
+    build: logstash/
+    image: docker-welt/logstash
+    volumes:
+      - "$PWD/workarea/pbs_log:/pbs_log"
+      - "$PWD/logstash_pbs/pipeline:/usr/share/logstash/pipeline"
+      - "$PWD/logstash_pbs/patterns:/usr/share/logstash/patterns"
+    ports:
+      - "5300:5000"
+    environment:
+      LS_JAVA_OPTS: "-Xmx1g -Xms1g"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
   kibana:
     build: kibana/
     image: docker-welt/kibana
