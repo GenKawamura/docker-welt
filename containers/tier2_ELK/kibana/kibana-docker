@@ -165,7 +165,7 @@ umask 0002
 ## --------------------------------------------------------------------
 ## Recovering dashboard in this kibana instance
 restore_kibana_dashboard(){
-    local restore_file=/usr/share/kibana/config/restore.sh
+    local restore_file=/usr/share/kibana/config/restore_dashboard.sh
 
     ## Restore the kibana dashboard
     ! [ -e $restore_file ] && echo "[$restore_file] does not exist" && exit -1
@@ -173,15 +173,15 @@ restore_kibana_dashboard(){
     ## Restoring the service
     for i in $(seq 1 60)
     do
+	sleep 60
 	bash -x $restore_file
 	[ $? -eq 0 ] && echo "Restored Kibana Dashboard" && exit 0
 	echo "Failed [$i]: could not restore Kibana dashboard. Retrying..."
-	sleep 60
     done
     exit -1
 }
 
-#restore_kibana_dashboard &
+restore_kibana_dashboard &
 
 ## --------------------------------------------------------------------
 ## End:
