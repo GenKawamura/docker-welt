@@ -1,2 +1,27 @@
 # 05/08/2020 00:27:20;E;55358809.pbs-goegrid.local;user=prdatl47 group=atlasprd jobname=crea2_541555051 queue=atlasXL ctime=1588847946 qtime=1588847946 etime=1588847946 start=1588890260 owner=prdatl47@creamce2.local exec_host=compute-17-5/1 Resource_List.cput=96:00:00 Resource_List.mem=3gb Resource_List.ncpus=1 Resource_List.neednodes=1:ppn=1 Resource_List.nodect=1 Resource_List.nodes=1:ppn=1 Resource_List.vmem=12gb Resource_List.walltime=48:00:00 session=66179 end=1588890440 Exit_status=0 resources_used.cput=00:01:37 resources_used.mem=82720kb resources_used.vmem=2782312kb resources_used.walltime=00:03:00
-PBS_LOG %{DATESTAMP:pbs_timestamp};%{DATA:status};%{DATA:jobid};user=%{DATA:user} group=%{DATA:group} jobname=%{DATA:jobname} queue=%{DATA:queue} ctime=%{NONNEGINT:ctime} qtime=%{NONNEGINT:qtime} etime=%{NONNEGINT:etime} start=%{NONNEGINT:start} owner=%{DATA:owner} exec_host=%{DATA:exec_host}/%{DATA:exec_cpu} %{GREEDYDATA:txt}
+
+# 01/02/2020 02:19:57;E;53642656.pbs-goegrid.local;user=niklas.schwanemann group=theorie jobname=VI_z01_b1 queue=shorttime ctime=1577895763 qtime=157789
+5763 etime=1577918793 start=1577918918 owner=niklas.schwanemann@rocks7.local exec_host=compute-19-5/8 Resource_List.mem=20gb Resource_List.ncpus=1 Resource_List.neednodes=1:ppn=1 Resource_List.nodect=1 Resource_List.nodes=1:ppn=1 Resource_List.vmem=20gb Resource_List.walltime=23:59:00 session=277867 end=1577927997 Exit_status=0 resources_used.cput=02:30:45 resources_used.mem=195580kb resources_used.vmem=1231368kb resources_used.walltime=02:31:19
+
+
+# Definition
+PBS_COMMON %{DATESTAMP:pbs_timestamp};%{DATA:status};%{DATA:jobid};user=%{DATA:user} group=%{DATA:group} jobname=%{DATA:jobname} queue=%{DATA:queue} ctime=%{NONNEGINT:ctime} qtime=%{NONNEGINT:qtime} etime=%{NONNEGINT:etime} start=%{NONNEGINT:start} owner=%{DATA:owner} exec_host=%{DATA:exec_host}
+
+
+PBS_RESOURCE0 Resource_List.cput=%{DATA:resource_list_cput} Resource_List.mem=%{DATA:resource_list_mem} Resource_List.ncpus=%{DATA:resource_list_ncpus} Resource_List.neednodes=%{DATA:resource_list_neednodes} Resource_List.nodect=%{DATA:resource_list_nodect} Resource_List.nodes=%{DATA:resource_list_nodes} Resource_List.vmem=%{DATA:resource_list_vmem} Resource_List.walltime=%{DATA:resource_list_walltime} 
+
+PBS_RESOURCE1 Resource_List.mem=%{DATA:resource_list_mem} Resource_List.ncpus=%{DATA:resource_list_ncpus} Resource_List.neednodes=%{DATA:resource_list_neednodes} Resource_List.nodect=%{DATA:resource_list_nodect} Resource_List.nodes=%{DATA:resource_list_nodes} Resource_List.vmem=%{DATA:resource_list_vmem} Resource_List.walltime=%{DATA:resource_list_walltime} 
+
+
+
+PBS_USED0 Resource_List.cput=%{DATA:resource_list_cput} Resource_List.mem=%{DATA:resource_list_mem} Resource_List.ncpus=%{DATA:resource_list_ncpus} Resource_List.neednodes=%{DATA:resource_list_neednodes} Resource_List.nodect=%{DATA:resource_list_nodect} Resource_List.nodes=%{DATA:resource_list_nodes} Resource_List.vmem=%{DATA:resource_list_vmem} Resource_List.walltime=%{DATA:resource_list_walltime} session=%{INT:session} end=%{INT:end} Exit_status=%{INT:exit_status} resources_used.cput=%{DATA:resources_used_cput} resources_used.mem=%{INT:resources_used_mem_kb}kb resources_used.vmem=%{INT:resources_used_vmem_kb}kb resources_used.walltime=%{DATA:resources_used_walltime}
+
+PBS_USED1 Resource_List.mem=%{DATA:resource_list_mem} Resource_List.ncpus=%{DATA:resource_list_ncpus} Resource_List.neednodes=%{DATA:resource_list_neednodes} Resource_List.nodect=%{DATA:resource_list_nodect} Resource_List.nodes=%{DATA:resource_list_nodes} Resource_List.vmem=%{DATA:resource_list_vmem} Resource_List.walltime=%{DATA:resource_list_walltime} session=%{INT:session} end=%{INT:end} Exit_status=%{INT:exit_status} resources_used.cput=%{DATA:resources_used_cput} resources_used.mem=%{INT:resources_used_mem_kb}kb resources_used.vmem=%{INT:resources_used_vmem_kb}kb resources_used.walltime=%{DATA:resources_used_walltime}
+
+
+# Main
+PBS_LOG_START0 %{PBS_COMMON} %{PBS_RESOURCE0}
+PBS_LOG_START1 %{PBS_COMMON} %{PBS_RESOURCE1}
+PBS_LOG_END0 %{PBS_COMMON} %{PBS_USED0}
+PBS_LOG_END1 %{PBS_COMMON} %{PBS_USED1}
+
