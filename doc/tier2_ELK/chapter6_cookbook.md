@@ -115,15 +115,15 @@ There are many client tools for Elasticsearch. These can most easily be communic
 
 * List indexes
 
-     $ curl 'localhost:9200/_cat/indices?v'
+     $ curl -XGET http://localhost:9200/_cat/indices?v
 
-* Filter if error_code in billing log is '0'
+* Filter if 'status' in PBS is 'E'
 
-     $ curl -XPOST 'localhost:9200/_search' -d '{"query": { "bool": { "filter": { "term": {"error_code": "0"} } } } }'
+     $ curl -XGET 'localhost:9200/pbs/_search?q=status:E&pretty=true&size=1000'
 
-* Simple search
+* Simple search in PBS log
 
-     $ curl 'localhost:9200/_search?pretty=true'
+     $ curl -XGET 'localhost:9200/pbs/_search?&pretty=true&size=1000'
 
 * Simple matches using pool_name in 'billing log'
 

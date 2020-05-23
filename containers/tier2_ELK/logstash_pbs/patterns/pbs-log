@@ -14,9 +14,11 @@ PBS_RESOURCE1 Resource_List.mem=%{DATA:resource_list_mem} Resource_List.ncpus=%{
 
 
 
-PBS_USED0 Resource_List.cput=%{DATA:resource_list_cput} Resource_List.mem=%{DATA:resource_list_mem} Resource_List.ncpus=%{DATA:resource_list_ncpus} Resource_List.neednodes=%{DATA:resource_list_neednodes} Resource_List.nodect=%{DATA:resource_list_nodect} Resource_List.nodes=%{DATA:resource_list_nodes} Resource_List.vmem=%{DATA:resource_list_vmem} Resource_List.walltime=%{DATA:resource_list_walltime} session=%{INT:session} end=%{INT:end} Exit_status=%{INT:exit_status} resources_used.cput=%{DATA:resources_used_cput} resources_used.mem=%{INT:resources_used_mem_kb}kb resources_used.vmem=%{INT:resources_used_vmem_kb}kb resources_used.walltime=%{DATA:resources_used_walltime}
+PBS_USED0 Resource_List.cput=%{DATA:resource_list_cput} Resource_List.mem=%{DATA:resource_list_mem} Resource_List.ncpus=%{DATA:resource_list_ncpus} Resource_List.neednodes=%{DATA:resource_list_neednodes} Resource_List.nodect=%{DATA:resource_list_nodect} Resource_List.nodes=%{DATA:resource_list_nodes} Resource_List.vmem=%{DATA:resource_list_vmem} Resource_List.walltime=%{DATA:resource_list_walltime} session=%{INT:session} end=%{INT:end} Exit_status=%{INT:exit_status} resources_used.cput=%{DATA:resources_used_cput} resources_used.mem=%{DATA:resources_used_mem} resources_used.vmem=%{DATA:resources_used_vmem} resources_used.walltime=%{GREEDYDATA:resources_used_walltime}
 
-PBS_USED1 Resource_List.mem=%{DATA:resource_list_mem} Resource_List.ncpus=%{DATA:resource_list_ncpus} Resource_List.neednodes=%{DATA:resource_list_neednodes} Resource_List.nodect=%{DATA:resource_list_nodect} Resource_List.nodes=%{DATA:resource_list_nodes} Resource_List.vmem=%{DATA:resource_list_vmem} Resource_List.walltime=%{DATA:resource_list_walltime} session=%{INT:session} end=%{INT:end} Exit_status=%{INT:exit_status} resources_used.cput=%{DATA:resources_used_cput} resources_used.mem=%{INT:resources_used_mem_kb}kb resources_used.vmem=%{INT:resources_used_vmem_kb}kb resources_used.walltime=%{DATA:resources_used_walltime}
+
+PBS_USED1 Resource_List.mem=%{DATA:resource_list_mem} Resource_List.ncpus=%{DATA:resource_list_ncpus} Resource_List.neednodes=%{DATA:resource_list_neednodes} Resource_List.nodect=%{DATA:resource_list_nodect} Resource_List.nodes=%{DATA:resource_list_nodes} Resource_List.vmem=%{DATA:resource_list_vmem} Resource_List.walltime=%{DATA:resource_list_walltime} session=%{INT:session} end=%{INT:end} Exit_status=%{INT:exit_status} resources_used.cput=%{DATA:resources_used_cput} resources_used.mem=%{DATA:resources_used_mem} resources_used.vmem=%{DATA:resources_used_vmem} resources_used.walltime=%{GREEDYDATA:resources_used_walltime}
+
 
 
 # Main
