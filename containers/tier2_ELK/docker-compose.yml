@@ -92,6 +92,19 @@ services:
     volumes:
       - "$PWD/kibana:/usr/share/kibana/config"
 
+  kibana:
+    build: grafana/
+    image: docker-welt/grafana
+    ports:
+      - "20262:3000"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+    volumes:
+      - "$PWD/grafana:/usr/share/grafana/config"
+
 
 networks:
   elk:
