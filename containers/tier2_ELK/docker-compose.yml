@@ -15,63 +15,18 @@ services:
     networks:
       - elk
 
-  logstash_dcache:
+  logstash:
     build: logstash
     image: docker-welt/logstash
     volumes:
+      - "$PWD/logstash/pipeline:/usr/share/logstash/pipeline"
+      - "$PWD/logstash/patterns:/usr/share/logstash/patterns"
+      - "$PWD/workarea/pbs_log:/pbs_log"    
       - "$PWD/workarea/dcache_billing:/dcache_billing"
-      - "$PWD/logstash_dcache/pipeline:/usr/share/logstash/pipeline"
-      - "$PWD/logstash_dcache/patterns:/usr/share/logstash/patterns"
+      - "$PWD/workarea/htcondor_eventlog:/htcondor_eventlog"
+      - "$PWD/workarea/arcce_log:/arcce_log"
     ports:
       - "5000:5000"
-    environment:
-      LS_JAVA_OPTS: "-Xmx1g -Xms1g"
-    networks:
-      - elk
-    depends_on:
-      - elasticsearch
-
-  logstash_htcondor:
-    build: logstash/
-    image: docker-welt/logstash
-    volumes:
-      - "$PWD/workarea/htcondor_eventlog:/htcondor_eventlog"
-      - "$PWD/logstash_htcondor/pipeline:/usr/share/logstash/pipeline"
-      - "$PWD/logstash_htcondor/patterns:/usr/share/logstash/patterns"
-    ports:
-      - "5100:5000"
-    environment:
-      LS_JAVA_OPTS: "-Xmx1g -Xms1g"
-    networks:
-      - elk
-    depends_on:
-      - elasticsearch
-
-  logstash_arcce:
-    build: logstash/
-    image: docker-welt/logstash
-    volumes:
-      - "$PWD/workarea/arcce_log:/arcce_log"
-      - "$PWD/logstash_arcce/pipeline:/usr/share/logstash/pipeline"
-      - "$PWD/logstash_arcce/patterns:/usr/share/logstash/patterns"
-    ports:
-      - "5200:5000"
-    environment:
-      LS_JAVA_OPTS: "-Xmx1g -Xms1g"
-    networks:
-      - elk
-    depends_on:
-      - elasticsearch
-
-  logstash_pbs:
-    build: logstash/
-    image: docker-welt/logstash
-    volumes:
-      - "$PWD/workarea/pbs_log:/pbs_log"
-      - "$PWD/logstash_pbs/pipeline:/usr/share/logstash/pipeline"
-      - "$PWD/logstash_pbs/patterns:/usr/share/logstash/patterns"
-    ports:
-      - "5300:5000"
     environment:
       LS_JAVA_OPTS: "-Xmx1g -Xms1g"
     networks:
@@ -92,7 +47,7 @@ services:
     volumes:
       - "$PWD/kibana:/usr/share/kibana/config"
 
-  kibana:
+  grafana:
     build: grafana/
     image: docker-welt/grafana
     ports:
@@ -103,7 +58,7 @@ services:
       - elasticsearch
 
     volumes:
-      - "$PWD/grafana:/usr/share/grafana/config"
+      - "$PWD/workarea/grafana:/var/lib/grafana"
 
 
 networks:
