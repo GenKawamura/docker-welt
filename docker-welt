@@ -63,15 +63,16 @@ run_docker(){
 
     local workarea="$PWD/workarea/$template"
     [ ! -e $workarea ] && mkdir -v $workarea
-    export workarea
-    export container_dir
-    [ -e $container_dir/pre_exec.sh ] && bash $container_dir/pre_exec.sh
+    [ ! -e $container_dir/workarea ] && ln -s $workarea $container_dir/workarea
+    
+    pushd $container_dir
+    [ -e pre_exec.sh ] && bash pre_exec.sh
+    popd
     
     ## Running an image
     case $USE_COMPOSER in
 	ON)
 	    docker_command="docker-compose up --force-recreate"
-	    [ ! -e $container_dir/workarea ] && ln -s $workarea $container_dir/workarea
 	    ;;
 	*)
 	    local xwin_option="-e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix"
