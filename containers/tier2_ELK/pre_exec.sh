@@ -9,3 +9,4 @@ chmod 1777 workarea/elasticsearch_index_data
 chmod 1777 workarea/grafana
 cp -v grafana/grafana.db workarea/grafana
 chmod 666 workarea/grafana/grafana.db
+rsync -avlogp --delete grafana/plugins workarea/grafana
