@@ -513,16 +513,16 @@ communicated through RESTful web service in Elasticsearch engine.
 \item
   List indexes
 
-  \$ curl 'localhost:9200/\_cat/indices?v'
+  \$ curl -XGET http://localhost:9200/\_cat/indices?v
 \item
-  Filter if error\_code in billing log is `0'
+  Filter if `status' in PBS is `E'
 
-  \$ curl -XPOST 'localhost:9200/\_search' -d `\{``query'': \{ ``bool'':
-  \{ ``filter'': \{ ``term'': \{``error\_code'': ``0''\} \} \} \} \}'
+  \$ curl -XGET
+  'localhost:9200/pbs/\_search?q=status:E\&pretty=true\&size=1000'
 \item
-  Simple search
+  Simple search in PBS log
 
-  \$ curl 'localhost:9200/\_search?pretty=true'
+  \$ curl -XGET 'localhost:9200/pbs/\_search?\&pretty=true\&size=1000'
 \item
   Simple matches using pool\_name in `billing log'
 

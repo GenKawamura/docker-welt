@@ -1,3 +1,4 @@
+
 # Kibana
 
 ![Main Dashboard](images/kibana.png)
@@ -6,4 +7,7 @@ Kibana is an open source analytics and visualization platform designed to work w
 
 
 ![Main Error Dashboard](images/kibana_error.png)
+
+
+# Grafana
 
