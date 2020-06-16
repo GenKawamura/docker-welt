@@ -4,87 +4,22 @@
 
 * Cloning the main command and generating ELK templates
 
-    $  git clone https://github.com/HappyFaceGoettingen/mad-gantry.git
+    $  git clone https://github.com/GenKawamura/docker-welt.git
 
-    $  cd mad-gantry
+    $  cd docker-welt
 
-    $  ./mad-gantry -t templates/docker-elk -b
+    $  ./docker-welt -C -r tier2_ELK
 
-    $  ./mad-gantry -D -a setup
 
-    $ ls payloads/data/GoeGridELK
+    $ ls workarea/tier2_ELK/GoeGridELK
 
-    billing  elasticsearch_index_data
+    arcce_log  dcache_billing  elasticsearch_index_data  grafana  htcondor_eventlog  pbs_log
 
-* Copy billing logs into the billing directory (Note: indices will be kept in the 'elasticsearch_index_data' directory)
+* Copy dCache/ARC/HTCondor/PBS logs into the billing directory (Note: indices will be kept in the 'elasticsearch_index_data' directory)
 
-* Turn GoeGridELK instance up
-
-    $  ./mad-gantry -s GoeGridELK -a up
+* Logstash instance send the log information to Elasticsearch instance. A port 20261 is used for Kibana and a port 20262 is used for Grafana.
 
     $ docker ps
-
-
-## Configuration files and templates
-There are some templates for ELK and dCache. These can most easily be configured by copying them. Please note the templates of ELK used for the test instance above mentioned can be found in 'configs/customs/GoeGridELK' and the templates are copied into 'ship/GoeGridELK' directory when it is set up. The interal configuration parameters in the template files, such as '__SITE__', '__PORT__' and so, on are adjusted by a configuration of 'ticket.conf'. 
-
-For instance, the site names and the docker images of 'GoeGridELK' are defined by Tier3 section of the 'ticket.conf' file.
-
-      ## ALL level3 sites (= Level3), level 3 sites are not in a tree structure
-      ALL_LEVEL3_SITES=(AdminServer ApplicationBuilder GoeGridELK)
-      ALL_LEVEL3_IMAGES=("happyface/admin-server.el7" "" "happyface/kibana")
-      ALL_LEVEL3_HOSTS=($CLOUD0 $CLOUD0 $CLOUD0)
-      ALL_LEVEL3_PORTS=(101 102 103)
-      ALL_LEVEL3_SHIPS=("" "" "docker-elk")
-
-
-When the GoeGridELK and setup option of the gantry command are called, the ship YAML file (ship/GoeGridELK/docker-compose.yml) generated and the custom tempalates are copied (from 'configs/customs/GoeGridELK') to 'payloads/sites/GoeGridELK'.
-
-   * configs/customs/GoeGridELK/kibana/kibana.yml
-
-Default Kibana configuration from kibana-docker.
-
-      ## from https://github.com/elastic/kibana-docker/blob/master/build/kibana/config/kibana.yml
-      #
-      server.name: kibana
-      server.host: "0"
-      elasticsearch.url: http://__SITE__elasticsearch:__PORT__
-      
-      ## Disable X-Pack
-      ## see https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
-      ##     https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html#xpack-enabling
-      #
-      xpack.security.enabled: false
-      xpack.monitoring.enabled: false
-      xpack.ml.enabled: false
-      xpack.graph.enabled: true
-      xpack.reporting.enabled: false
-      xpack.grokdebugger.enabled: false
-
-
-   * ship/GoeGridELK/docker-compose.yml
-
-A final template for Docker Compose
-
-     Version: "2.0"
-        services:
-        
-        # ELK framework Ship Platform
-        goegridelkelasticsearch:
-        image: happyface/elasticsearch
-        volumes:
-           - "/home/gen/mad-gantry/payloads/ssh:/root/.ssh"
-           - "/home/gen/mad-gantry/payloads/data/GoeGridELK/billing:/billing"
-           - "/home/gen/mad-gantry/payloads/sites/GoeGridELK/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
-           - "/home/gen/mad-gantry/payloads/data/GoeGridELK/elasticsearch_index_data:/usr/share/elasticsearch/data"
-        ports:
-           - "9200:9200"
-           - "9300:9300"
-        environment:
-          ES_JAVA_OPTS: "-Xmx7g -Xms7g"
-        networks:
-           - elk
-        .......
 
 
 
@@ -117,19 +52,35 @@ There are many client tools for Elasticsearch. These can most easily be communic
 
      $ curl -XGET http://localhost:9200/_cat/indices?v
 
+* Simple search in PBS log (show json structures)
+
+     $ curl -XGET 'localhost:9200/pbs/_search?&pretty=true&size=1000'
+
+* Simple search in dCache billing log
+
+     $ curl -XGET 'localhost:9200/dcache-billing-2020.05/_search?pretty=true&size=1000'
+
+
 * Filter if 'status' in PBS is 'E'
 
      $ curl -XGET 'localhost:9200/pbs/_search?q=status:E&pretty=true&size=1000'
 
-* Simple search in PBS log
+* Filter if 'error_code' in dCache log is not '0'
 
-     $ curl -XGET 'localhost:9200/pbs/_search?&pretty=true&size=1000'
+     $ curl -XGET 'localhost:9200/dcache-billing-2020.05/_search?q=!(error_code:0)&pretty=true&size=1000'
+
+
+* Show mapping structure (A definition of the PBS index)
+
+     $ curl localhost:9200/pbs/_mapping?pretty
+
 
 * Simple matches using pool_name in 'billing log'
 
      $ curl -XPOST 'localhost:9200/_search?pretty=true' -d '{"query": { "match_all": {} } }'
 
      $ curl -XPOST 'localhost:9200/_search?pretty=true' -d '{"query": { "match": { "pool_name": "pool-p1-1-data" } } }'
+
 
 * Aggregations
 
