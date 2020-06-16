@@ -11,7 +11,7 @@
     $  ./docker-welt -C -r tier2_ELK
 
 
-    $ ls workarea/tier2_ELK/GoeGridELK
+    $ ls workarea/tier2_ELK/
 
     arcce_log  dcache_billing  elasticsearch_index_data  grafana  htcondor_eventlog  pbs_log
 

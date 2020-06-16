@@ -22,6 +22,12 @@ The docker-welt command can provides a simple wrapper of docker "build" and "run
 
 
 * Components
+ 1. Elasticsearch Logstash Kibana (Grafana) stack. Please read a documentation (under [doc](doc)).
+ 
+  $ docker-welt -C -b tier2_ELK
+
+  
+
  1. Foreman
 
   * https://www.youtube.com/watch?v=eHjpZr3GB6s&feature=emb_logo
